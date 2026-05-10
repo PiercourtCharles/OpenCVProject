@@ -118,7 +118,7 @@ namespace OpenCvSharp.ML
         /// </summary>
         /// <param name="data">the training data</param>
         /// <param name="test">if true, the error is computed over the test subset of the data, 
-        /// otherwise it's computed over the training subset of the data. Please note that if you 
+        /// otherwise it's computed over the training subset of the data. Please Note that if you 
         /// loaded a completely different dataset to evaluate already trained classifier, you will 
         /// probably want not to set the test subset at all with TrainData::setTrainTestSplitRatio 
         /// and specify test=false, so that the error is computed for the whole new set. Yes, this 

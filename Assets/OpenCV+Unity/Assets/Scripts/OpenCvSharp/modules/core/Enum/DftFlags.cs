@@ -81,7 +81,7 @@ namespace OpenCvSharp
         /// the output is a real array; while the function itself does not 
         /// check whether the input is symmetrical or not, you can pass the flag 
         /// and then the function will assume the symmetry and produce the real 
-        /// output array (note that when the input is packed into a real array 
+        /// output array (Note that when the input is packed into a real array 
         /// and inverse transformation is executed, the function treats the input 
         /// as a packed complex-conjugate symmetrical array, and the output 
         /// will also be a real array).

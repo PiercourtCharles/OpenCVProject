@@ -1,17 +1,17 @@
 using OpenCvSharp;
 using OpenCvSharp.Demo;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CounterFinder : WebCamera
 {
+    [SerializeField] PolygonCollider2D _polygonCollider;
     [SerializeField] FlipMode _imageFlip;
+    [SerializeField] Vector2[] _vectorArray;
     [SerializeField] float _threshold = 96.4f;
-    [SerializeField] bool _showProcessingImage = true;
     [SerializeField] float _curveAccuracy = 10;
     [SerializeField] float _minArea = 5000;
-    [SerializeField] PolygonCollider2D _polygonCollider;
-    [SerializeField] Vector2[] _vectorArray;
+    [SerializeField] bool _showProcessingImage = true;
+    [SerializeField] bool _showContours = true;
 
     Mat _image;
     Mat _processImage = new();
@@ -37,17 +37,31 @@ public class CounterFinder : WebCamera
 
             if (area > _minArea)
             {
-                DrawContour(_processImage, new Scalar(127, 127, 127), 2, points);
+                if (_showContours)
+                    if (_showProcessingImage)
+                        DrawContour(_processImage, new Scalar(127, 127, 127), 2, points);
+                    else
+                        DrawContour(_image, new Scalar(127, 127, 127), 2, points);
 
-                _polygonCollider.pathCount++;
+                        _polygonCollider.pathCount++;
                 _polygonCollider.SetPath(_polygonCollider.pathCount - 1, PointsToVector2(points));
             }
         }
 
         if (output == null)
-            output = OpenCvSharp.Unity.MatToTexture(_showProcessingImage ? _processImage : _image);
+        {
+            if (_showProcessingImage)
+                output = OpenCvSharp.Unity.MatToTexture(_processImage);
+            else
+                output = OpenCvSharp.Unity.MatToTexture(_image);
+        }
         else
-            OpenCvSharp.Unity.MatToTexture(_showProcessingImage ? _processImage : _image, output);
+        {
+            if (_showProcessingImage)
+                OpenCvSharp.Unity.MatToTexture(_processImage, output);
+            else
+                OpenCvSharp.Unity.MatToTexture(_image, output);
+        }
 
         return true;
     }

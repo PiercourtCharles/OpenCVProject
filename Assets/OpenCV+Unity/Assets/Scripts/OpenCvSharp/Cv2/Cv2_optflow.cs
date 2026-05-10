@@ -12,7 +12,7 @@ namespace OpenCvSharp
         /// <param name="silhouette">Silhouette mask that has non-zero pixels where the motion occurs.</param>
         /// <param name="mhi">Motion history image that is updated by the function (single-channel, 32-bit floating-point).</param>
         /// <param name="timestamp">Current time in milliseconds or other units.</param>
-        /// <param name="duration">Maximal duration of the motion track in the same units as timestamp .</param>
+        /// <param name="duration">Maximal Duration of the motion track in the same units as timestamp .</param>
         public static void UpdateMotionHistory(
             InputArray silhouette, InputOutputArray mhi,
             double timestamp, double duration)
@@ -71,7 +71,7 @@ namespace OpenCvSharp
         /// and the mask of a region whose direction needs to be calculated.</param>
         /// <param name="mhi">Motion history image calculated by UpdateMotionHistory() .</param>
         /// <param name="timestamp">Timestamp passed to UpdateMotionHistory() .</param>
-        /// <param name="duration">Maximum duration of a motion track in milliseconds, passed to UpdateMotionHistory() .</param>
+        /// <param name="duration">Maximum Duration of a motion track in milliseconds, passed to UpdateMotionHistory() .</param>
         /// <returns></returns>
         public static double CalcGlobalOrientation(
             InputArray orientation, InputArray mask, InputArray mhi,
