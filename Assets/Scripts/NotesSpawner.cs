@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Spawning notes and management
+/// </summary>
 public class NotesSpawner : MonoBehaviour
 {
     [SerializeField] MidiIntegration _midi;
@@ -20,24 +23,10 @@ public class NotesSpawner : MonoBehaviour
     float _timeValue = 0;
     [SerializeField] bool _isGameLaunched = false;
 
-    //public void StartGame()
-    //{
-    //    _isGameLaunched = true;
-    //}
-
     private void Update()
     {
         if (!_isGameLaunched)
             return;
-
-        _timeValue += Time.deltaTime;
-
-        if (_timeValue >= _actualTimeSpace)
-        {
-            _timeValue = 0;
-            _actualTimeSpace = Random.Range(_timeBetweenNotes.x, _timeBetweenNotes.y);
-            PlaceNote();
-        }
 
         foreach (var item in _notes)
         {
@@ -45,23 +34,23 @@ public class NotesSpawner : MonoBehaviour
         }
     }
 
-    public void PlaceNote(/*Note note*/)
+    public void PlaceNote(MusicNote note)
     {
-        //float valuePos = note.NoteValue / 127f;
-        float valuePos = Random.Range(0f, 1.1f);
+        if (note.Tick == 0)
+            return;
+
+        float valuePos = note.NoteValue / 127f;
 
         Vector3 pos = Vector3.Lerp(_boundaryA.position, _boundaryB.position, valuePos);
-
-        Debug.Log($"{valuePos} : {pos}");
 
         var obj = Instantiate(_notePrefab, pos, Quaternion.identity, _noteParent).transform;
         obj.localPosition = new Vector3(obj.localPosition.x, obj.localPosition.y, 0);
 
-        var note = obj.GetComponent<ObjectTouch>();
-        if (note != null)
+        var noteTouch = obj.GetComponent<ObjectTouch>();
+        if (noteTouch != null)
         {
-            note.Spawner = this;
-            _notes.Add(note);
+            noteTouch.Spawner = this;
+            _notes.Add(noteTouch);
         }
     }
 

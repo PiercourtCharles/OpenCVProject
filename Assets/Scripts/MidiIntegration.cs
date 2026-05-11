@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// </summary>
 public class MidiIntegration : MonoBehaviour
 {
     [SerializeField] List<MusicNote> _notes = new();
@@ -13,6 +16,8 @@ public class MidiIntegration : MonoBehaviour
     [SerializeField] Transform _boundaryB;
     [SerializeField] Transform _boundaryC;
     [SerializeField] Transform _noteParent;
+
+    [SerializeField] NotesSpawner _spawner;
 
     public void NoteDisplay(MidiFilePlayer midiPlayer)
     {
@@ -33,12 +38,13 @@ public class MidiIntegration : MonoBehaviour
             noteVar.Duration = midiEvent.Length;
 
             _notes.Add(noteVar);
-            //Debug.Log($"Tick:{noteVar.Tick} Note:{noteVar.NoteValue} / {noteVar.NoteName} Velocity:{noteVar.Velocity} Duration:{noteVar.Duration}");
 
-            PlaceNote(noteVar);
+            //PlaceNote(noteVar);
+            _spawner.PlaceNote(noteVar);
         }
     }
 
+    //Debug notes display on screen, just uncomment ligne 40 to see
     public void PlaceNote(MusicNote note)
     {
         float valuePos = (float)note.Tick / _filePlayer.MPTK_TickLast;
@@ -49,12 +55,8 @@ public class MidiIntegration : MonoBehaviour
 
         pos = new Vector3(pos.x, valueNote, pos.z);
 
-        //Debug.Log($"{valuePos} : {pos}");
-
         var obj = Instantiate(_notePrefab, pos, Quaternion.identity, _noteParent).transform;
         obj.localPosition = new Vector3(obj.localPosition.x, obj.localPosition.y, 0);
-
-        _notes.Add(obj.GetComponent<MusicNote>());
     }
 
     public MidiFilePlayer GetFile()

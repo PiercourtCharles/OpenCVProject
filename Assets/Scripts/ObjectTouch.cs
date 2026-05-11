@@ -1,15 +1,18 @@
 using UnityEngine;
 
+/// <summary>
+/// Object falling and desappear by being touched
+/// </summary>
 public class ObjectTouch : MonoBehaviour
 {
     public NotesSpawner Spawner;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log("Eh");
         Spawner.NoteDisappear(this);
 
-        var counterFinder = collision.transform.parent.GetComponent<CounterFinder>();
+        var counterFinder = collision.transform.GetComponent<OutlinesFinder>();
+
         if (counterFinder != null)
             Spawner.NoteDie(this);
     }

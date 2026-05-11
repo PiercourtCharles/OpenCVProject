@@ -2,8 +2,12 @@ using OpenCvSharp;
 using OpenCvSharp.Demo;
 using UnityEngine;
 
-public class CounterFinder : WebCamera
+/// <summary>
+/// OpenCV getting cam image and get outlines for colliders
+/// </summary>
+public class OutlinesFinder : WebCamera
 {
+    [SerializeField] RectTransform _rctf;
     [SerializeField] PolygonCollider2D _polygonCollider;
     [SerializeField] FlipMode _imageFlip;
     [SerializeField] Vector2[] _vectorArray;
@@ -43,7 +47,7 @@ public class CounterFinder : WebCamera
                     else
                         DrawContour(_image, new Scalar(127, 127, 127), 2, points);
 
-                        _polygonCollider.pathCount++;
+                _polygonCollider.pathCount++;
                 _polygonCollider.SetPath(_polygonCollider.pathCount - 1, PointsToVector2(points));
             }
         }
@@ -72,7 +76,10 @@ public class CounterFinder : WebCamera
 
         for (int i = 0; i < points.Length; i++)
         {
-            _vectorArray[i] = new Vector2(points[i].X, points[i].Y);
+            float scaleX = _rctf.rect.width / _image.Width;
+            float scaleY = _rctf.rect.height / _image.Height;
+
+            _vectorArray[i] = new Vector2((points[i].X * scaleX) - (_rctf.rect.width * 0.5f), -(points[i].Y * scaleY) + (_rctf.rect.height * 0.5f));
         }
 
         return _vectorArray;
