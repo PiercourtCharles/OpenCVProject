@@ -23,4 +23,4 @@ Next on that, I used the functions in this package to change the image color, ge
 After that i used the "Maestro - Midi Player Tool Kit" to allow me to play some midi files on the project. I used it to get information on the music played and make the falling stars fall from the notes played.
 
 ![https://github.com/Your_Repository_Name/Your_GIF_Name.gif](GitDocs/NotesDebugDisplay.png) <br>
-(Debug vision of the notes playing during play)
+(Example of debug vision of the notes playing during play)
